@@ -1,6 +1,6 @@
 import allUsers from './all-users';
 import getJSON from './get-json';
 import sayHello from './say-hello';
-import importAlphaRoster from './import-alpha-roster.js';
+import analyzeAlphaRoster from './analyze-alpha-roster.js';
 
-export { importAlphaRoster, allUsers, getJSON, sayHello };
+export { analyzeAlphaRoster, allUsers, getJSON, sayHello };

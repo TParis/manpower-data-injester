@@ -1,8 +1,8 @@
 {
-  "importAlphaRoster": {
+  "analyzeAlphaRoster": {
     "returnType": "string",
     "inputVariables": {
-      "file": "string"
+      "record_id": "integer"
     }
   },
   "allUsers": {
