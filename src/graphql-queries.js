@@ -1,4 +1,4 @@
-let getAllRosterImports = `
+let findImportObjectWhere = `
   {
     allRosterimport(where: $where) {
       results {
@@ -20,4 +20,12 @@ let findRosterObjectWhere = `
   }
 `;
 
-export {getAllRosterImports, findRosterObjectWhere};
+let createAnalysis = `
+      mutation {
+        createRosterimportanalysis(input: $input) {
+          id
+        }
+      }
+    `;
+
+export {findImportObjectWhere, findRosterObjectWhere, createAnalysis};

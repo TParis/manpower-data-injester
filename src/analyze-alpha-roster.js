@@ -3,28 +3,30 @@ import * as alphaRosterQueries from './graphql-queries.js';
 
 
 async function analyzeAlphaRoster() {
+
 	const id = await context("record_id");
 
 	var record = await getRecord(id);
 
 	var match = await findMatch(record);
 
-	if (match === null) {
+	var certainty = (match === null) ? 0 : compareRecords(record, match);
 
-		var certainty = compareRecords(record, match);
+	//Logically, a null match will always evaluated to certainty being under 100 -
+	//but for readability, I left it there.  It's one extra operation...big whoop.
+	//Sometimes readability > efficiency
+	var action = (match === null || certainty < 100) ? "import" : "null";
 
-	}
-
-	var action = (match === null) ? "import" : "merge";
+	return (await addAnalysisToTable(record, match, certainty, action)) ? 1 : 0;
 
 }
 
 async function getRecord(record_id) {
-  	let query = alphaRosterQueries.findRosterObjectWhere;
+  	let query = alphaRosterQueries.findImportObjectWhere;
     let record = await gql(query, {
         where: { id: {eq: record_id } },
     });
-    let member = record.allRosterimport.results[0]
+    let member = record.allRosterimport.results[0];
     return member;
 }
 
@@ -34,11 +36,7 @@ async function findMatch(record) {
         where: { ssan: {eq: record.ssan } },
     });
 
-		if (roster.allRoster.results.length > 0) {
-    	let member = roster.allRoster.results[0]
-    } else {
-			member = null;
-		}
+		let member = (roster.allRoster.results.length > 0) ? roster.allRoster.results[0] : null;
 
 		return member;
 }
@@ -54,7 +52,17 @@ function compareRecords(record, match) {
 		}
 	}
 
-	return math.ceil(score / total);
+	return (math.ceil((score / total) * 100));
+}
+
+async function addAnalysisToTable(record, match, certainty, action) {
+		let query = alphaRosterQueries.createAnalysis;
+
+		let roster_id = (match === null) ? 0 : match.id;
+
+	  return await gql(query, {
+	    input: { action: String(action), certainty: Number(certainty), importRecord: Number(record.id), rosterRecord: Number(roster_id) },
+	  });
 }
 
 export default analyzeAlphaRoster;
