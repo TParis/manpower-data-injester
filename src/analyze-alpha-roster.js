@@ -14,7 +14,7 @@ async function analyzeAlphaRoster() {
 	//Logically, a null match will always evaluated to certainty being under 100 -
 	//but for readability, I left it there.  It's one extra operation...big whoop.
 	//Sometimes readability > efficiency
-	var action = (match === null || certainty < 100) ? "import" : "noaction";
+	var action = (match === null || certainty < 100) ? "import" : "no-action";
 
 	return (await addAnalysisToTable(record, match, certainty, action)) ? 1 : 0;
 
@@ -45,11 +45,15 @@ function compareRecords(record, match) {
 
 	var score = 0;
 
-	var total = mapObject.map(item => item.weight).reduce((prev, next) => prev + next);
+	var total = 0;
 
 	mapObject.forEach(function(column) {
-		if (record.hasOwnProperty(column.import) && match.hasOwnProperty(column.roster) && (record[column.import] == match[column.roster])) {
-			score = score + column.weight;
+		if (record.hasOwnProperty(column.import) && match.hasOwnProperty(column.roster)) {
+			if (record[column.import] == match[column.roster]) {
+				score = score + column.weight;
+			}
+			//Only add up the properties used.
+			total = total + column.weight;
 		}
 	});
 	return (Math.ceil((score / total) * 100));
