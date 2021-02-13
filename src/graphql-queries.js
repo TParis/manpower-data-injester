@@ -134,4 +134,51 @@ let createAnalysis = `
       }
     `;
 
-export {findImportObjectWhere, findRosterObjectWhere, createAnalysis};
+let findCivilianImportObjectWhere = `{
+  allCivilianrosterimport(where: $where){
+    results{
+      afsc
+      agcy
+      appType
+      artIdAuth
+      auditDt
+      bus
+      centMgdPosnType
+      cfid
+      clc
+      cpcn
+      dtAppExp
+      dtClass
+      dtEstab
+      dtPsnVac
+      dtStPosn
+      fac
+      flsa
+      id
+      lvl1EmplName
+      manpowerRemarks
+      mobInd
+      mpcn
+      name
+      offSymbol
+      osid
+      pasCode
+      pasDesc
+      pec
+      positionRemarksArea
+      positionTitle
+      posnNteDt
+      posnSens
+      posnStatus
+      ppSrsGrTgr
+      psnOccpd
+      reserveCategory
+      reserveCategoryDesc
+      sarCode
+      scdLeave
+      supvLvl
+    }
+  }
+}`;
+
+export {findCivilianImportObjectWhere, findImportObjectWhere, findRosterObjectWhere, createAnalysis};

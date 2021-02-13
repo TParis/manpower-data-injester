@@ -5,6 +5,12 @@
       "record_id": "integer"
     }
   },
+  "analyzeCivilianRoster": {
+    "returnType": "string",
+    "inputVariables": {
+      "record_id": "integer"
+    }
+  },
   "allUsers": {
     "returnType": "string"
   },
