@@ -1,5 +1,5 @@
-import mapObject from './alpha-roster-map.js';
-import * as alphaRosterQueries from './graphql-queries.js';
+import * as maps from './alpha-roster-map.js';
+import * as queries from './graphql-queries.js';
 
 async function analyzeAlphaRoster() {
 
@@ -21,7 +21,7 @@ async function analyzeAlphaRoster() {
 }
 
 async function getRecord(record_id) {
-  	let query = alphaRosterQueries.findImportObjectWhere;
+  	let query = queries.findImportObjectWhere;
     let record = await gql(query, {
         where: { id: {eq: record_id } },
     });
@@ -31,7 +31,7 @@ async function getRecord(record_id) {
 
 async function findMatch(record) {
 
-  	let query = alphaRosterQueries.findRosterObjectWhere;
+  	let query = queries.findRosterObjectWhere;
     let roster = await gql(query, {
         where: { ssan: {eq: record.ssan } },
     });
@@ -47,7 +47,7 @@ function compareRecords(record, match) {
 
 	var total = 0;
 
-	mapObject.forEach(function(column) {
+	maps.AlphaRosterMap.forEach(function(column) {
 		if (record.hasOwnProperty(column.import) && match.hasOwnProperty(column.roster)) {
 			if (record[column.import] == match[column.roster]) {
 				score = score + column.weight;
@@ -64,7 +64,7 @@ function compareRecords(record, match) {
 async function addAnalysisToTable(record, match, certainty, action) {
 
 		console.debug("pre getquery");
-		let query = alphaRosterQueries.createAnalysis;
+		let query = queries.createAnalysis;
 		let record_id = (record && record.id) ? record.id : 0;
 		let match_id = (match && match.id) ? match.id : 0;
 

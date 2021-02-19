@@ -1,5 +1,5 @@
 
-const mapObject = [
+const AlphaRosterMap = [
 	{roster: 'acduStatus', import: 'acduStatus',weight: 1},
 	{roster: 'afrSectionid', import: 'afrSectionid',weight: 1},
 	{roster: 'afsc2', import: 'afsc2',weight: 1},
@@ -78,7 +78,7 @@ const mapObject = [
 	{roster: 'uifDispositionDate', import: 'uifDispositionDate',weight: 1}
 ];
 
-const mapCivilianObject = [
+const CivilianRosterMap = [
 	{import: 'afsc', roster: 'pafsc', weight: 1},
 	{import: 'agcy', roster: '', weight: 1},
 	{import: 'appType', roster: '', weight: 1},
@@ -121,4 +121,4 @@ const mapCivilianObject = [
 	{import: 'supvLvl', roster: '', weight: 1}
 ];
 
-export {mapObject, mapCivilianObject};
+export {AlphaRosterMap, CivilianRosterMap};
