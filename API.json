@@ -1,0 +1,14 @@
+{
+  "allMembers": {
+    "returnType": "string"
+  },
+  "oneMember": {
+    "returnType": "string",
+    "inputVariables": {
+      "record_id": "integer", 
+      "token": "string"
+    }
+  }
+}
+
+// init project folder, clone repo, publish to bb.
